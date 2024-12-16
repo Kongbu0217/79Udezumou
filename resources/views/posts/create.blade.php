@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <form action="{{ route('posts.store') }}" method="POST">
-                @csrf
+                @csrf <!-- これないとエラーになる -->
                 <div class="form-group">
                     <label>タイトル</label>
                     <input type="text" class="form-control" placeholder="タイトルを入力して下さい" name="title">
@@ -19,6 +19,6 @@
             </form>
         </div>
     </div>
-  </div>
+</div>
 
 @endsection
