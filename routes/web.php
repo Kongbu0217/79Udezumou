@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
-use App\Http\Controllers\commentController;
+use App\Http\Controllers\CommentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,7 +26,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 //     return view('posts.create');
 // });
 
-Route::resource('posts', PostController::class);
+// Route::resource('posts', PostController::class);
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 
