@@ -46,3 +46,9 @@ Route::get('/comments/create/{post_id}',[CommentController::class,'create'])->na
 
 Route::post('/comments',[CommentController::class,'store'])->name('comments.store');
 
+// ===コメント用===
+Route::get('/comments/{id}/edit', [CommentController::class, 'edit'])->name('comments.edit'); // コメント編集ページ
+
+Route::put('/comments/{id}', [CommentController::class, 'update'])->name('comments.update');  // コメント更新
+
+Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comments.destroy'); // コメント削除
