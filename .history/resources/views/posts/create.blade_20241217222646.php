@@ -15,6 +15,7 @@
                     <textarea class="form-control" placeholder="内容" rows="5" name="body">
                     </textarea>
                 </div>
+                
 {{-- MIO --}}
                 <div>
                     <label>優先順位</label><br>

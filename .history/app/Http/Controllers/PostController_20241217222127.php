@@ -47,12 +47,11 @@ class PostController extends Controller
         $post->body = $request->body;
         $post->user_id = Auth::id(); // 現在ログインしているユーザーidを取得
 
-        //追加(MIO)
+        //任意機能追加(MIO)
         $post->prio = $request->prio; //優先順位
         $post->moto = $request->moto; //モチベーション
         $post->category = $request->category; //カテゴリー
-        $post->cob = $request->cob; //締切日
-        //（MIO)
+        $post->cob = $request->cob; //締切
 
         $post->save();
 
