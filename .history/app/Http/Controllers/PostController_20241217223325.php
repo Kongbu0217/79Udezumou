@@ -52,7 +52,6 @@ class PostController extends Controller
         $post->moto = $request->moto; //モチベーション
         $post->category = $request->category; //カテゴリー
         $post->cob = $request->cob; //締切日
-        //（MIO)
 
         $post->save();
 

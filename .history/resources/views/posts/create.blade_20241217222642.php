@@ -15,6 +15,7 @@
                     <textarea class="form-control" placeholder="内容" rows="5" name="body">
                     </textarea>
                 </div>
+                
 {{-- MIO --}}
                 <div>
                     <label>優先順位</label><br>
@@ -44,7 +45,9 @@
                     <label>締切日</label><br>
                     <input type="date" name="cob">
                 </div>
+
 {{-- MIO --}}
+
                 <button type="submit" class="btn btn-primary">作成</button>
             </form>
         </div>

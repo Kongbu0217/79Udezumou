@@ -15,7 +15,6 @@
                     <textarea class="form-control" placeholder="内容" rows="5" name="body">
                     </textarea>
                 </div>
-{{-- MIO --}}
                 <div>
                     <label>優先順位</label><br>
                     <select name="prio">
@@ -33,18 +32,11 @@
                     </select>
                 </div>
                 <div>
-                    <label>カテゴリー</label><br>
-                    <select name="category">
-                        <option value="first">カテゴリー１</option>
-                        <option value="second">カテゴリー２</option>
-                        <option value="third">カテゴリー３</option>
-                    </select>
-                </div>
-                <div>
                     <label>締切日</label><br>
                     <input type="date" name="cob">
                 </div>
-{{-- MIO --}}
+
+
                 <button type="submit" class="btn btn-primary">作成</button>
             </form>
         </div>
