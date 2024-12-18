@@ -51,7 +51,7 @@
                 </div>
             </div>
         </div>
-        @endforeach
+            @endforeach
         @else
             <!-- 検索結果がない場合表示 -->
             <div class="col-12 text-center">
@@ -61,31 +61,26 @@
     </div>
 </div>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    // 各カードを対象に処理を行う
-    document.querySelectorAll('.card').forEach(card => {
-        const postId = card.id.split('-')[1];  // id="card-{postId}" から postId を抽出
-        const checkbox = document.getElementById('checkbox-' + postId);
-        const cardElement = document.getElementById('card-' + postId);
+    // チェックボックスとカードの参照を取得
+    const checkbox = document.getElementById("checkbox");
+    const card = document.getElementById("card");
 
-        // localStorage から状態を読み込む
-        if (localStorage.getItem('cardHighlight-' + postId) === 'true') {
-            checkbox.checked = true;
-            cardElement.classList.add('highlight');
-        }
+    // 初期状態を設定（localStorageから取得）
+    if (localStorage.getItem("cardHighlight") === "true") {
+    checkbox.checked = true;
+    card.classList.add("highlight");
+    }
 
-        // チェックボックスの状態が変わったときの処理
-        checkbox.addEventListener('change', () => {
-            if (checkbox.checked) {
-                cardElement.classList.add('highlight');
-                localStorage.setItem('cardHighlight-' + postId, 'true');
-            } else {
-                cardElement.classList.remove('highlight');
-                localStorage.setItem('cardHighlight-' + postId, 'false');
-            }
-        });
+    // チェックボックスの状態が変わったときの処理
+    checkbox.addEventListener("change", () => {
+    if (checkbox.checked) {
+    card.classList.add("highlight");
+    localStorage.setItem("cardHighlight", "true");
+    } else {
+    card.classList.remove("highlight");
+    localStorage.setItem("cardHighlight", "false");
+    }
     });
-});
 </script>
 
 @endsection

@@ -33,7 +33,6 @@
                         <label>
                             <input type="checkbox" id="checkbox-{{ $post->id }}"> 終わったらチェック
                         </label>
-                        <!-- チェックボックス -->
                         <h5 class="card-title"> {{ $post->title }}</h5>
                         <div class="image-container mb-3">
                             <!-- 三項演算子 -->
@@ -43,49 +42,44 @@
                         <p class="card-text small">投稿者：{{ $post->user->name }}</p>
                     </div>
                     <div class="card-footer text-center">
-                        <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary btn-sm" target="_blank">詳細
-                        @if($post->comments->count() > 0)
-                            <span>(コメント{{ $post->comments->count() }}件)</span>
+                    <a href="{{ route('posts.show', $post->id) }}" class="btn btn-primary btn-sm" target="_blank">詳細
+                    @if($post->comments->count() > 0)
+                        <span>(コメント{{ $post->comments->count() }}件)</span>
                         @endif
-                        </a>
+                    </a>
                 </div>
             </div>
-        </div>
-        @endforeach
+            </div>
+            @endforeach
         @else
             <!-- 検索結果がない場合表示 -->
             <div class="col-12 text-center">
                 <p>検索結果が見つかりませんでした。</p>
             </div>
         @endif
+                </div>
     </div>
-</div>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    // 各カードを対象に処理を行う
-    document.querySelectorAll('.card').forEach(card => {
-        const postId = card.id.split('-')[1];  // id="card-{postId}" から postId を抽出
-        const checkbox = document.getElementById('checkbox-' + postId);
-        const cardElement = document.getElementById('card-' + postId);
+    // チェックボックスとカードの参照を取得
+    const checkbox = document.getElementById("checkbox");
+    const card = document.getElementById("card");
 
-        // localStorage から状態を読み込む
-        if (localStorage.getItem('cardHighlight-' + postId) === 'true') {
-            checkbox.checked = true;
-            cardElement.classList.add('highlight');
-        }
+    // 初期状態を設定（localStorageから取得）
+    if (localStorage.getItem("cardHighlight") === "true") {
+    checkbox.checked = true;
+    card.classList.add("highlight");
+    }
 
-        // チェックボックスの状態が変わったときの処理
-        checkbox.addEventListener('change', () => {
-            if (checkbox.checked) {
-                cardElement.classList.add('highlight');
-                localStorage.setItem('cardHighlight-' + postId, 'true');
-            } else {
-                cardElement.classList.remove('highlight');
-                localStorage.setItem('cardHighlight-' + postId, 'false');
-            }
-        });
+    // チェックボックスの状態が変わったときの処理
+    checkbox.addEventListener("change", () => {
+    if (checkbox.checked) {
+    card.classList.add("highlight");
+    localStorage.setItem("cardHighlight", "true");
+    } else {
+    card.classList.remove("highlight");
+    localStorage.setItem("cardHighlight", "false");
+    }
     });
-});
 </script>
 
 @endsection

@@ -61,31 +61,7 @@
     </div>
 </div>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    // 各カードを対象に処理を行う
-    document.querySelectorAll('.card').forEach(card => {
-        const postId = card.id.split('-')[1];  // id="card-{postId}" から postId を抽出
-        const checkbox = document.getElementById('checkbox-' + postId);
-        const cardElement = document.getElementById('card-' + postId);
-
-        // localStorage から状態を読み込む
-        if (localStorage.getItem('cardHighlight-' + postId) === 'true') {
-            checkbox.checked = true;
-            cardElement.classList.add('highlight');
-        }
-
-        // チェックボックスの状態が変わったときの処理
-        checkbox.addEventListener('change', () => {
-            if (checkbox.checked) {
-                cardElement.classList.add('highlight');
-                localStorage.setItem('cardHighlight-' + postId, 'true');
-            } else {
-                cardElement.classList.remove('highlight');
-                localStorage.setItem('cardHighlight-' + postId, 'false');
-            }
-        });
-    });
-});
+    
 </script>
 
 @endsection
