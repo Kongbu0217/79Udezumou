@@ -33,6 +33,7 @@
                         <label>
                             <input type="checkbox" id="checkbox"> 終わったらチェック
                         </label>
+                        
                     <!-- チェックボックス -->
                     <h5 class="card-title"> {{ $post->title }}</h5>
                     <div class="image-container mb-3">
@@ -60,27 +61,5 @@
         @endif
     </div>
 </div>
-<script>
-    // チェックボックスとカードの参照を取得
-    const checkbox = document.getElementById("checkbox");
-    const card = document.getElementById("card");
-
-    // 初期状態を設定（localStorageから取得）
-    if (localStorage.getItem("cardHighlight") === "true") {
-    checkbox.checked = true;
-    card.classList.add("highlight");
-    }
-
-    // チェックボックスの状態が変わったときの処理
-    checkbox.addEventListener("change", () => {
-    if (checkbox.checked) {
-    card.classList.add("highlight");
-    localStorage.setItem("cardHighlight", "true");
-    } else {
-    card.classList.remove("highlight");
-    localStorage.setItem("cardHighlight", "false");
-    }
-    });
-</script>
 
 @endsection
