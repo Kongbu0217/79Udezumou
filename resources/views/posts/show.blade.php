@@ -17,11 +17,11 @@
                 <p class="card-text">{{ $post->body }}</p>
                 <p>投稿日時：{{ $post->created_at }}</p>
                 <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-secondary">編集</a>
-                <form action="{{ route('posts.destroy', $post->id) }}' method='post'>
+                <form action="{{ route('posts.destroy', $post->id) }}" method="POST" style="display:inline;">
                     @csrf
-                    @method('delete')
-                        <input type='submit' value='削除' class="btn btn-sm btn-danger" onclick='return confirm("本当に削除しますか？");'>
-                    </form>
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-sm btn-danger">削除</button>
+                </form>
             </div>
         </div>
             </div>

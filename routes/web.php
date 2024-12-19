@@ -27,7 +27,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 // });
 
 //画像アップロードのルート
-Route::resource('posts', PostController::class);
+// Route::resource('posts', PostController::class);
 
 Route::get('/posts', [PostController::class,'index'])->name('posts.index');
 
@@ -53,3 +53,4 @@ Route::get('/comments/{id}/edit', [CommentController::class, 'edit'])->name('com
 Route::put('/comments/{id}', [CommentController::class, 'update'])->name('comments.update');  // コメント更新
 
 Route::delete('/comments/{id}', [CommentController::class, 'destroy'])->name('comments.destroy'); // コメント削除
+

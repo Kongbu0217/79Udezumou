@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
+    //MIO
+    function __construct()
+    {
+        $this->post = new Post();
+    }
+
     function index(Request $request)
     {
         $query = Post::query();
@@ -27,7 +33,8 @@ class PostController extends Controller
             });
         }
 
-        $posts = $query->get(); // 条件に応じてデータを取得
+        // $posts = $query->get(); // 条件に応じてデータを取得
+        $posts = $query->orderBy('created_at', 'desc')->get();
 
         return view('posts.index', [
             'posts' => $posts,
@@ -110,10 +117,8 @@ class PostController extends Controller
 
     function destroy($id)
     {
-        $post = Post::find($id);
-
+        $post = Post::findOrFail($id);
         $post->delete();
-        
         return redirect()->route('posts.index');
     }
 }

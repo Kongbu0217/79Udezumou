@@ -31,7 +31,7 @@
                     <div class="card-body text-center">    
                         <!-- チェックボックス　MIO -->
                         <label>
-                            <input type="checkbox" id="checkbox-{{ $post->id }}"> 終わったらチェック
+                            <input type="checkbox" id="checkbox-{{ $post->id }}"> 達成
                         </label>
                         <!-- チェックボックス -->
                         <h5 class="card-title"> {{ $post->title }}</h5>
@@ -51,7 +51,7 @@
                 </div>
             </div>
         </div>
-        @endforeach
+            @endforeach
         @else
             <!-- 検索結果がない場合表示 -->
             <div class="col-12 text-center">
