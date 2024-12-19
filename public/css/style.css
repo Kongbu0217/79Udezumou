@@ -39,6 +39,7 @@
     left: auto; /* 左側の余白を調整 */
   }
 
+/* === フッター === */
 footer {
   background-color: #a7c4f3;
   color: #333;
@@ -48,6 +49,7 @@ footer {
   padding: 20px 0;
 }
 
+/* === 投稿 === */
   .image-container {
     width: 100%; /* カード幅いっぱい */
     padding-top: 56.25%; /* 16:9 のアスペクト比 (高さ:幅の比率) */

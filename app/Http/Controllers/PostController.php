@@ -49,14 +49,22 @@ class PostController extends Controller
 
     function store(Request $request)
     {
-        // dd($request);
 
-        // バリデーション（MIO）
-        $validated = $request->validate([
-            'title' => 'required|string|max:30',
-            'body' => 'required|string|max:120',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+
+        // バリデーション
+        $request->validate([
+        'title' => 'required|max:30', // タイトルは必須で30文字以内
+        'body' => 'required|max:140', // 内容は必須で140文字以内
+        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'prio' => 'required|not_in:zero', // 優先順位: 必須で "zero" (--) を選ばせない
+    ], [
+        'title.required' => 'タイトルは入力必須項目です。',
+        'title.max' => 'タイトルは30文字以内で入力してください。',
+        'body.required' => '内容は入力必須項目です。',
+        'body.max' => '内容は140文字以内で入力してください。',
+        'prio.required' => '優先順位を選択してください。',
+        'prio.not_in' => '優先順位を選択してください。',
+    ]);
 
         // $requestに入っている値を、new Postでデータベースに保存するという記述
         $post = new Post;
@@ -82,7 +90,7 @@ class PostController extends Controller
 
         $post->save();
 
-        return redirect()->route('posts.index');
+        return redirect()->route('posts.index')->with('status', '投稿が作成されました！');
     }
 
     function show($id)
@@ -106,14 +114,32 @@ class PostController extends Controller
 
     function update(Request $request, $id)
     {
+        
+        $request->validate([
+            'title' => 'required|max:30', // タイトルは必須で30文字以内
+            'body' => 'required|max:140', // 内容は必須で140文字以内
+            'prio' => 'required|not_in:zero', // 優先順位: 必須で "zero" (--) を選ばせない
+        ], [
+            'title.required' => 'タイトルは入力必須項目です。',
+            'title.max' => 'タイトルは30文字以内で入力してください。',
+            'body.required' => '内容は入力必須項目です。',
+            'body.max' => '内容は140文字以内で入力してください。',
+            'prio.required' => '優先順位を選択してください。',
+            'prio.not_in' => '優先順位を選択してください。',
+        ]);
+        
         $post = Post::find($id);
 
-        $post->title = $request->title;
-        $post->body = $request->body;
+        $post->title = $request->input('title');
+        $post->body = $request->input('body');
+        $post->prio = $request->input('prio');
+        $post->category = $request->input('category');
+        $post->moto = $request->input('moto');
+        $post->cob = $request->input('cob');
         $post->save();
 
-        return view('posts.show', ['post' => $post]);
-    }
+        return redirect()->route('posts.index')->with('status', '投稿が更新されました！');
+    }    
 
     function destroy($id)
     {

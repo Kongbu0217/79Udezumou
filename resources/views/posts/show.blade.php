@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card mt-3">
                 <div class="card-header">
-                    <h5>{{ $post->title }}</h5>
+                    <h5>{{ $post->title }}</h5> <!-- 見出し -->
                 </div>
             <div class="card-body">
                 {{-- 画像がもしもあれば表示（MIO) --}}
