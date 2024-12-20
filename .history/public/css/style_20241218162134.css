@@ -1,0 +1,77 @@
+/* === 横スクロール防止 === */
+  body, html {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* 横スクロール防止 */
+  }
+
+/* === ヘッダー全体 === */
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #a7c4f3; /* 背景色 */
+    padding: 14px 40px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+/* === ロゴ画像 === */
+  .logo {
+    height: 36px;
+  }
+
+/* === ユーザー名のスタイル === */
+  .header-right a.dropdown-toggle {
+    color: white; /* 色を白に */
+    font-weight: bold; /* 太字 */
+    text-decoration: none; /* 下線を削除 */
+  }
+
+  .header-right a.dropdown-toggle:hover {
+    color: #f8f9fa; /* ホバー時の色を少し変更 */
+  }
+
+/* === ドロップダウンメニュー === */
+  .dropdown-menu {
+    right: 0; /* 右揃え */
+    left: auto; /* 左側の余白を調整 */
+  }
+
+footer {
+  background-color: #a7c4f3;
+  color: #333;
+  text-align: center;
+  font-size: 20px;
+  margin-top: 100px;
+  padding: 20px 0;
+}
+
+  .image-container {
+    width: 100%; /* カード幅いっぱい */
+    padding-top: 56.25%; /* 16:9 のアスペクト比 (高さ:幅の比率) */
+    position: relative;
+    overflow: hidden; /* はみ出した画像を隠す */
+    background-color: #f0f0f0; /* 背景色 (画像がない時) */
+    border-radius: 8px; /* 角丸 */
+  }
+
+  .image-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* アスペクト比を保ちながら、コンテナにフィット */
+  }
+
+
+  /* 背景色変更 MIO*/
+.card-body text-center{
+  background-color: white;
+transition: background-color 0.3s;
+}
+.highlight {
+background-color: rgb(174, 178, 180);
+}

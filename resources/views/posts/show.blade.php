@@ -9,9 +9,12 @@
                     <h5>{{ $post->title }}</h5> <!-- タイトル -->
                 </div>
 
+
                 <div class="image-container mb-3">
-                            <img src="{{ $post->image_path }}" class="img-fluid" alt="投稿画像">  <!-- 画像 -->
-                        </div>
+                @if ($post->path)
+                    <img src="{{ asset('storage/' . $post->path) }}" alt="Post Image">
+                @endif
+                </div>
 
             <div class="card-body">
                 <span>優先順位: {{ $post->prio }}</span> <!-- 優先順位 -->
@@ -21,11 +24,13 @@
                 <span>締切日: {{ $post->cob }}</span> <!-- 締め切り日 -->
                 <p>投稿日時：{{ $post->created_at }}</p> <!-- 投稿日時 -->
                 <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-secondary">編集</a> <!-- 編集ボタン -->
-                <form action="{{ route('posts.destroy', $post->id) }}" method='post'> <!-- 削除ボタン -->
+
+                <form action="{{ route('posts.destroy', $post->id) }}" method="POST" style="display:inline;">
+
                     @csrf
-                    @method('delete')
-                        <input type='submit' value='削除' class="btn btn-sm btn-danger" onclick='return confirm("本当に削除しますか？");'>
-                    </form>
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-sm btn-danger">削除</button>
+                </form>
             </div>
         </div>
             </div>
