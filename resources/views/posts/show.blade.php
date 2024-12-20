@@ -6,18 +6,27 @@
         <div class="col-md-8">
             <div class="card mt-3">
                 <div class="card-header">
-                    <h5>{{ $post->title }}</h5> <!-- 見出し -->
+                    <h5>{{ $post->title }}</h5> <!-- タイトル -->
                 </div>
-            <div class="card-body">
-                {{-- 画像がもしもあれば表示（MIO) --}}
+
+
+                <div class="image-container mb-3">
                 @if ($post->path)
                     <img src="{{ asset('storage/' . $post->path) }}" alt="Post Image">
                 @endif
-                {{-- MIO --}}
-                <p class="card-text">{{ $post->body }}</p>
-                <p>投稿日時：{{ $post->created_at }}</p>
-                <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-secondary">編集</a>
+                </div>
+
+            <div class="card-body">
+                <span>優先順位: {{ $post->prio }}</span> <!-- 優先順位 -->
+                <span>カテゴリー: {{ $post->category }}</span> <!-- カテゴリー -->
+                <p class="card-text">{{ $post->body }}</p> <!-- 内容 -->
+                <span>モチベーション: {{ $post->moto }}</span> <!-- モチベーション -->
+                <span>締切日: {{ $post->cob }}</span> <!-- 締め切り日 -->
+                <p>投稿日時：{{ $post->created_at }}</p> <!-- 投稿日時 -->
+                <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-sm btn-secondary">編集</a> <!-- 編集ボタン -->
+
                 <form action="{{ route('posts.destroy', $post->id) }}" method="POST" style="display:inline;">
+
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-sm btn-danger">削除</button>

@@ -2,14 +2,25 @@
 @section('content')
 
 <div class="container mt-5">
-<!-- 検索フォーム -->
+    <!-- 検索フォームとソート機能 -->
     <div class="row justify-content-center mb-4">
-        <div class="col-md-6"> <!-- 検索窓の幅を中央寄せ＆調整 -->
-            <form action="{{ route('posts.index') }}" method="GET">
-                <div class="input-group">
-                    <input type="text" name="search" class="form-control" placeholder="タイトルや本文を検索" value="{{ request('search') }}">
-                    <button type="submit" class="btn btn-primary">検索</button>
-                </div>
+        <div class="col-md-8">
+            <form action="{{ route('posts.index') }}" method="GET" class="d-flex align-items-center">
+                <!-- 検索フォーム -->
+                <input type="text" name="search" class="form-control me-2" placeholder="タイトルや本文を検索" value="{{ request('search') }}" style="flex: 2;">
+
+                <!-- ソートセレクト -->
+                <select name="sort" class="form-select me-2" style="flex: 1;">
+                    <option value="cob_asc" {{ request('sort') === 'cob_asc' ? 'selected' : '' }}>締切日（早→遅）</option>
+                    <option value="cob_desc" {{ request('sort') === 'cob_desc' ? 'selected' : '' }}>締切日（遅→早）</option>
+                    <option value="created_at_asc" {{ request('sort') === 'created_at_asc' ? 'selected' : '' }}>登録日（登録）</option>
+                    <option value="created_at_desc" {{ request('sort') === 'created_at_desc' ? 'selected' : '' }}>登録日（新着順）</option>
+                    <option value="prio_asc" {{ request('sort') === 'prio_asc' ? 'selected' : '' }}>優先度（高→低）</option>
+                    <option value="prio_desc" {{ request('sort') === 'prio_desc' ? 'selected' : '' }}>優先度（低→高）</option>
+                </select>
+
+                <!-- 検索ボタン -->
+                <button type="submit" class="btn btn-primary">検索</button>
             </form>
         </div>
     </div>
@@ -22,12 +33,13 @@
         </div>
     </div>
 
+
 <!-- 投稿リスト -->
 <div class="row">
     @if($posts->count() > 0)
         @foreach($posts as $post)
-            <div class="col-md-3 mb-4">
-                <div class="card h-100" id="card-{{ $post->id }}">
+            <div class="col-md-3 mb-4"> <!-- カードを横4つに -->
+                <div class="card h-100" id="card-{{ $post->id }}">  <!-- 高さ統一 -->
                     <div class="card-body text-center">
                         <!-- チェックボックス　MIO -->
                         <label>
@@ -47,7 +59,7 @@
                             <span>カテゴリー: {{ $post->category }}</span> <!-- カテゴリー -->
                         </div>
 
-                        <p class="card-text">{{ $post->body }}</p> <!-- 本文 -->
+                        <p class="card-text"> {{ $post->body }}</p> <!-- 内容 -->
 
                         <!-- モチベーション、締め切り日を横並びで表示 -->
                         <div class="d-flex justify-content-around mb-3">
@@ -69,12 +81,14 @@
                 </div>
             </div>
         @endforeach
+
     @else
         <!-- 検索結果がない場合表示 -->
         <div class="col-12 text-center">
             <p>検索結果が見つかりませんでした。</p>
         </div>
     @endif
+
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
