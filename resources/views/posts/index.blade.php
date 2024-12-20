@@ -38,7 +38,7 @@
 
                         <div class="image-container mb-3">
                             <!-- 三項演算子 -->
-                            <img src="{{ $post->path ? asset('storage/' . $post->path) : 'サンプル' }}" class="img-fluid" alt="投稿画像">
+                            <img src="{{ $post->path ? asset('storage/' . $post->path) : asset('img/uchinoko.JPEG') }}" class="img-fluid" alt="投稿画像">
                         </div>
 
                         <!-- 優先順位、カテゴリーを横並びで表示 -->
