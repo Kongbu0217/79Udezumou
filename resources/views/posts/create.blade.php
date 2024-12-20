@@ -5,6 +5,16 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <form action="{{ route('posts.store') }}" method="POST">
+                    @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
                 @csrf <!-- これないとエラーになる -->
                 <div class="form-group">
                     <label>タイトル</label>
@@ -19,14 +29,16 @@
                 <div>
                     <label>優先順位</label><br>
                     <select name="prio">
-                        <option value="first">1その他</option>
-                        <option value="second">2その他</option>
-                        <option value="third">3その他</option>
+                        <option value="zero">--</option>
+                        <option value="first">高</option>
+                        <option value="second">中</option>
+                        <option value="third">低</option>
                     </select>
                 </div>
                 <div>
                     <label>モチベーション</label><br>
                     <select name="moto">
+                        <option value="zero">--</option>
                         <option value="first">高</option>
                         <option value="second">中</option>
                         <option value="third">低</option>
@@ -35,14 +47,15 @@
                 <div>
                     <label>カテゴリー</label><br>
                     <select name="category">
-                        <option value="first">カテゴリー１</option>
-                        <option value="second">カテゴリー２</option>
-                        <option value="third">カテゴリー３</option>
+                        <option value="zero">--</option>
+                        <option value="first">単語</option>
+                        <option value="second">文法</option>
+                        <option value="third">スピーキング</option>
                     </select>
                 </div>
                 <div>
                     <label>締切日</label><br>
-                    <input type="date" name="cob">
+                    <input type="date" class="form-control" name="cob">
                 </div>
 {{-- MIO --}}
                 <button type="submit" class="btn btn-primary">作成</button>

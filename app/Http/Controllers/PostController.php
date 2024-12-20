@@ -12,25 +12,50 @@ class PostController extends Controller
     {
         $query = Post::query();
 
-        // 検索クエリを取得
+        // 検索クエリの処理
         $search = $request->input('search');
-
         if ($search) {
-            // タイトル、本文、コメント内容を検索対象に追加
             $query->where(function ($q) use ($search) {
                 $q->where('title', 'LIKE', "%{$search}%")
                     ->orWhere('body', 'LIKE', "%{$search}%")
                     ->orWhereHas('comments', function ($subQuery) use ($search) {
-                    $subQuery->where('body', 'LIKE', "%{$search}%");
-                        });
+                        $subQuery->where('body', 'LIKE', "%{$search}%");
+                    });
             });
         }
 
-        $posts = $query->get(); // 条件に応じてデータを取得
+        // ソートの処理
+        $sort = $request->input('sort', 'created_at_asc'); // デフォルトは日時順
+        switch ($sort) {
+            case 'cob_asc':
+                $query->orderBy('cob', 'asc');
+                break;
+            case 'cob_desc':
+                $query->orderBy('cob', 'desc');
+                break;
+            case 'created_at_asc':
+                $query->orderBy('created_at', 'asc');
+                break;
+            case 'created_at_desc':
+                $query->orderBy('created_at', 'desc');
+                break;
+            case 'prio_asc':
+                $query->orderByRaw("FIELD(prio, 'first', 'second', 'third')");
+                break;
+            case 'prio_desc':
+                $query->orderByRaw("FIELD(prio, 'third', 'second', 'first')");
+                break;
+            default:
+                $query->orderBy('created_at', 'asc');
+                break;
+        }
+
+        $posts = $query->get();
 
         return view('posts.index', [
             'posts' => $posts,
-            'search' => $search, // 現在の検索ワードをビューに渡す
+            'search' => $search,
+            'sort' => $sort,
         ]);
     }
 
@@ -41,32 +66,27 @@ class PostController extends Controller
 
     function store(Request $request)
     {
-        // バリデーション
         $request->validate([
-        'title' => 'required|max:30', // タイトルは必須で30文字以内
-        'body' => 'required|max:140', // 内容は必須で140文字以内
-        'prio' => 'required|not_in:zero', // 優先順位: 必須で "zero" (--) を選ばせない
-    ], [
-        'title.required' => 'タイトルは入力必須項目です。',
-        'title.max' => 'タイトルは30文字以内で入力してください。',
-        'body.required' => '内容は入力必須項目です。',
-        'body.max' => '内容は140文字以内で入力してください。',
-        'prio.required' => '優先順位を選択してください。',
-        'prio.not_in' => '優先順位を選択してください。',
-    ]);
-        // $requestに入っている値を、new Postでデータベースに保存するという記述
+            'title' => 'required|max:30',
+            'body' => 'required|max:140',
+            'prio' => 'required|not_in:zero',
+        ], [
+            'title.required' => 'タイトルは必須項目です。',
+            'title.max' => 'タイトルは30文字以内で入力してください。',
+            'body.required' => '内容は必須項目です。',
+            'body.max' => '内容は140文字以内で入力してください。',
+            'prio.required' => '優先順位を選択してください。',
+            'prio.not_in' => '優先順位を選択してください。',
+        ]);
+
         $post = new Post;
         $post->title = $request->title;
         $post->body = $request->body;
-        $post->user_id = Auth::id(); // 現在ログインしているユーザーidを取得
-
-        //追加(MIO)
-        $post->prio = $request->prio; //優先順位
-        $post->moto = $request->moto; //モチベーション
-        $post->category = $request->category; //カテゴリー
-        $post->cob = $request->cob; //締切日
-        //（MIO)
-
+        $post->user_id = Auth::id();
+        $post->prio = $request->prio;
+        $post->moto = $request->moto;
+        $post->category = $request->category;
+        $post->cob = $request->cob;
         $post->save();
 
         return redirect()->route('posts.index')->with('status', '投稿が作成されました！');
@@ -74,7 +94,6 @@ class PostController extends Controller
 
     function show($id)
     {
-        // 投稿データとそのコメントを取得
         $post = Post::with('comments.user')->find($id);
 
         if (!$post) {
@@ -93,22 +112,20 @@ class PostController extends Controller
 
     function update(Request $request, $id)
     {
-        
         $request->validate([
-            'title' => 'required|max:30', // タイトルは必須で30文字以内
-            'body' => 'required|max:140', // 内容は必須で140文字以内
-            'prio' => 'required|not_in:zero', // 優先順位: 必須で "zero" (--) を選ばせない
+            'title' => 'required|max:30',
+            'body' => 'required|max:140',
+            'prio' => 'required|not_in:zero',
         ], [
-            'title.required' => 'タイトルは入力必須項目です。',
+            'title.required' => 'タイトルは必須項目です。',
             'title.max' => 'タイトルは30文字以内で入力してください。',
-            'body.required' => '内容は入力必須項目です。',
+            'body.required' => '内容は必須項目です。',
             'body.max' => '内容は140文字以内で入力してください。',
             'prio.required' => '優先順位を選択してください。',
             'prio.not_in' => '優先順位を選択してください。',
         ]);
-        
-        $post = Post::find($id);
 
+        $post = Post::find($id);
         $post->title = $request->input('title');
         $post->body = $request->input('body');
         $post->prio = $request->input('prio');
@@ -118,14 +135,13 @@ class PostController extends Controller
         $post->save();
 
         return redirect()->route('posts.index')->with('status', '投稿が更新されました！');
-    }    
+    }
 
     function destroy($id)
     {
         $post = Post::find($id);
-
         $post->delete();
-        
+
         return redirect()->route('posts.index');
     }
 }
