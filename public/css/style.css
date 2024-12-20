@@ -67,3 +67,13 @@ footer {
     height: 100%;
     object-fit: cover; /* アスペクト比を保ちながら、コンテナにフィット */
   }
+
+
+  /* 背景色変更 MIO*/
+.card-body text-center{
+  background-color: white;
+transition: background-color 0.3s;
+}
+.highlight {
+background-color: rgb(174, 178, 180);
+}
